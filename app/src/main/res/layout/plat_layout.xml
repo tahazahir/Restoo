@@ -4,32 +4,40 @@
     android:layout_height="match_parent">
     <ImageView
         android:id="@+id/photo"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:padding="5dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingLeft="10dp">
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/designation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:paddingTop="5dp"
+            android:textColor="@color/black"
+            android:textSize="15sp"/>
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/genre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:paddingTop="5dp"
+            android:textColor="@color/black"
+            android:textSize="15sp"/>
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/prix"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:text=""
+            android:paddingTop="5dp"
+            android:textColor="@color/black"
+            android:textSize="15sp"/>
     </LinearLayout>
 
 

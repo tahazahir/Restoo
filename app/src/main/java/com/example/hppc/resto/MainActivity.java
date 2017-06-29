@@ -2,6 +2,7 @@ package com.example.hppc.resto;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ListView;
 
 import com.android.volley.RequestQueue;
@@ -11,38 +12,48 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.hppc.adapter.PlatAdapter;
 import com.example.hppc.model.Plat;
+import com.example.hppc.rest.RestClient;
+import com.example.hppc.rest.RestDelegate;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
-    ListView listView = (ListView) findViewById(R.id.list);
+    private ListView listView;
+    private RestClient restClient = RestClient.getInstance(this);
+    private List<Plat> plats;
+    private PlatAdapter platAdapter;
+
+    private RestDelegate restDelegate = new RestDelegate() {
+        @Override
+        public void onSuccess(Object object) {
+
+            platAdapter = new PlatAdapter(getApplicationContext(),(ArrayList<Plat>)object);
+            listView.setAdapter(platAdapter);
+        }
+
+        @Override
+        public void onError(int code, String error) {
+
+            Log.e("error",error);
+        }
+
+        @Override
+        public void forbidden() {
+            Log.e("error","forbidden");
+        }
+    };
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        RequestQueue queue = Volley.newRequestQueue(this);
-        JsonArrayRequest q = new JsonArrayRequest("http://172.20.10.4:8080/RestoWebService/webapi/myresource/plats", new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                Gson g = new Gson();
-                Plat[] plats = g.fromJson(response.toString(),Plat[].class);
-                PlatAdapter adapter = new PlatAdapter(MainActivity.this,plats);
-                listView.setAdapter(adapter);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-//test
-            }
-        });
+        listView = (ListView) findViewById(R.id.list);
 
-
-
-
-
-
-
-
+        restClient.getPlat(restDelegate);
     }
 }

@@ -5,10 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.hppc.model.Plat;
 import com.example.hppc.resto.R;
+
+import java.util.List;
 
 /**
  * Created by hppc on 25/06/2017.
@@ -17,21 +20,36 @@ import com.example.hppc.resto.R;
 public class PlatAdapter extends BaseAdapter {
     Context _context;
     LayoutInflater _layout;
-    Plat[] _plats;
+    List<Plat> _plats;
+    protected LayoutInflater mInflater;
 
-    public PlatAdapter(Context c, Plat[] p){
+    public PlatAdapter(Context c, List<Plat> p){
         _context=c;
         _plats=p;
+        mInflater = LayoutInflater.from(c);
     }
+
+    static class ViewHolder {
+
+        public ViewHolder(View v) {
+            genre = (TextView) v.findViewById(R.id.genre);
+            designation = (TextView) v.findViewById(R.id.designation);
+            prix = (TextView) v.findViewById(R.id.prix);
+        }
+
+        protected  TextView genre, designation,prix;
+        protected ImageView image;
+    }
+
 
     @Override
     public int getCount() {
-        return _plats.length;
+        return _plats.size();
     }
 
     @Override
-    public Object getItem(int i) {
-        return null;
+    public Plat getItem(int position) {
+        return _plats.get(position);
     }
 
     @Override
@@ -40,15 +58,21 @@ public class PlatAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        view = _layout.inflate(R.layout.plat_layout,null);
-        TextView genre = (TextView) view.findViewById(R.id.textView3);
-        TextView des = (TextView) view.findViewById(R.id.textView2);
-        TextView prix = (TextView) view.findViewById(R.id.textView);
-        genre.setText(_plats[i].getGenre());
-        des.setText(_plats[i].getDesignation());
-        prix.setText(String.valueOf( _plats[i].getPrix()));
+    public View getView(int position, View convertView, ViewGroup viewGroup) {
+        ViewHolder viewHolder = null;
 
-        return view;
+        if (convertView == null) {
+            convertView = mInflater.inflate(R.layout.plat_layout, viewGroup, false);
+            viewHolder = new ViewHolder(convertView);
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
+        }
+
+        viewHolder.genre.setText("genre : "+getItem(position).getGenre());
+        viewHolder.designation.setText("designation : "+getItem(position).getDesignation());
+        viewHolder.prix.setText("prix : "+String.valueOf(getItem(position).getPrix())+" DH");
+
+        return convertView;
     }
 }
