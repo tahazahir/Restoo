@@ -19,7 +19,7 @@ import retrofit2.http.GET;
 
 public class RestClient {
 
-   private static String baseUrl = "http://192.168.0.132:8080/";
+   public static String baseUrl = "http://192.168.0.132:8080/";
 
     private static RestClient instance;
     private Context context;
