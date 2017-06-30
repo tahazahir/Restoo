@@ -19,7 +19,7 @@ import retrofit2.http.GET;
 
 public class RestClient {
 
-    private static String baseUrl = "http://192.168.43.70/";
+   private static String baseUrl = "http://192.168.0.132:8080/";
 
     private static RestClient instance;
     private Context context;
@@ -36,7 +36,7 @@ public class RestClient {
 
     public interface RestApiInterface {
 
-        @GET("/plat/plat.php")
+        @GET("/RestoWebService/webapi/myresource/plats")
         Call<List<Plat>> getPlat();
 
     }
