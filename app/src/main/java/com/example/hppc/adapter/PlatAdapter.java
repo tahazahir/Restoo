@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.hppc.model.Plat;
 import com.example.hppc.resto.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -35,6 +36,7 @@ public class PlatAdapter extends BaseAdapter {
             genre = (TextView) v.findViewById(R.id.genre);
             designation = (TextView) v.findViewById(R.id.designation);
             prix = (TextView) v.findViewById(R.id.prix);
+            image = (ImageView) v.findViewById(R.id.plat_picture);
         }
 
         protected  TextView genre, designation,prix;
@@ -72,6 +74,8 @@ public class PlatAdapter extends BaseAdapter {
         viewHolder.genre.setText("genre : "+getItem(position).getGenre());
         viewHolder.designation.setText("designation : "+getItem(position).getDesignation());
         viewHolder.prix.setText("prix : "+String.valueOf(getItem(position).getPrix())+" DH");
+        Picasso.with(_context).load("https://d3cbihxaqsuq0s.cloudfront.net/images/19599487_xl.jpg").fit().centerCrop().into(viewHolder.image);
+
 
         return convertView;
     }

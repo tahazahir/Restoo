@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Resto</string>
+    <string name="app_name">Restaurant</string>
     <string name="title_activity_login">Sign in</string>
 
     <!-- Strings related to login -->
